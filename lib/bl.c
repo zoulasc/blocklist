@@ -46,6 +46,35 @@ __RCSID("$NetBSD$");
 
 #include "bl.h"
 
+typedef struct {
+	uint32_t bl_len;
+	uint32_t bl_version;
+	uint32_t bl_type;
+	char bl_data[];
+} bl_message_t;
+
+struct blocklist {
+	int b_fd;
+	int b_connected;
+	const char *b_path;
+	void (*b_fun)(int, const char *, ...);
+	bl_info_t b_info;
+};
+
+#define BL_VERSION	1
+
+bool
+bl_isconnected(bl_t b)
+{
+	return b->b_connected;
+}
+
+int
+bl_getfd(bl_t b)
+{
+	return b->b_fd;
+}
+
 static void
 bl_reset(bl_t b)
 {

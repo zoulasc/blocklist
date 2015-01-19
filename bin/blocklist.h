@@ -43,6 +43,7 @@ typedef struct blocklist *bl_t;
 __BEGIN_DECLS
 
 bl_t bl_create(void);
+int bl_getfd(bl_t);
 int bl_send(bl_t, bl_type_t, int, int, const char *);
 void bl_destroy(bl_t);
 

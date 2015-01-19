@@ -42,29 +42,12 @@ typedef struct {
 	char bi_msg[1024];
 } bl_info_t;
 
-typedef struct blocklist *bl_t;
+#define _PATH_BLSOCK "/tmp/blsock"
 
 __BEGIN_DECLS
 bl_t bl_create2(bool, const char *, void (*)(int, const char *, ...));
 bl_info_t *bl_recv(bl_t);
+bool bl_isconnected(bl_t);
 __END_DECLS
 
-#define _PATH_BLSOCK "/tmp/blsock"
-#define _PATH_BLCONF "/etc/blocklistd/conf"
-
 #endif /* _BL_H */
-typedef struct {
-	uint32_t bl_len;
-	uint32_t bl_version;
-	uint32_t bl_type;
-	char bl_data[];
-} bl_message_t;
-
-struct blocklist {
-	int b_fd;
-	int b_connected;
-	const char *b_path;
-	void (*b_fun)(int, const char *, ...);
-	bl_info_t b_info;
-};
-#define BL_VERSION	1
