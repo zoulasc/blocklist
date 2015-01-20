@@ -42,7 +42,7 @@ struct conf {
 
 __BEGIN_DECLS
 void parseconf(const char *);
-const struct conf *findconf(bl_info_t *);
+const struct conf *findconf(bl_info_t *, struct conf *);
 __END_DECLS
 
 #endif /* _CONF_H */

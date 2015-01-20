@@ -28,19 +28,14 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-#ifndef _INTERNAL_H
-#define _INTERNAL_H
+#ifndef _RUN_H
+#define _RUN_H
 
-#define	_PATH_BLCONF	"/etc/blocklistd/conf"
-#define	_PATH_BLCONTROL	"/etc/blocklistd/control"
-#define	_PATH_BLSTATE	"/var/run/blocklistd.db"
+__BEGIN_DECLS
+void run_flush(void);
+struct sockaddr_storage;
+int run_add(int, in_port_t, const struct sockaddr_storage *);
+void run_rem(int id);
+__END_DECLS
 
-struct conf *conf;
-size_t nconf;
-int debug;
-const char *rulename;
-const char *controlprog;
-
-void (*lfun)(int, const char *, ...);
-
-#endif /* _INTERNAL_H */
+#endif /* _RUN_H */

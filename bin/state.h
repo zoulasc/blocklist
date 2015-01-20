@@ -28,19 +28,31 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-#ifndef _INTERNAL_H
-#define _INTERNAL_H
+#ifndef _STATE_H
+#define _STATE_H
 
-#define	_PATH_BLCONF	"/etc/blocklistd/conf"
-#define	_PATH_BLCONTROL	"/etc/blocklistd/control"
-#define	_PATH_BLSTATE	"/var/run/blocklistd.db"
+#include <db.h>
+#include <time.h>
 
-struct conf *conf;
-size_t nconf;
-int debug;
-const char *rulename;
-const char *controlprog;
+struct dbinfo {
+	int count;
+	time_t last;
+	int id;
+};
 
-void (*lfun)(int, const char *, ...);
+__BEGIN_DECLS
+struct sockaddr_storage;
+struct conf;
 
-#endif /* _INTERNAL_H */
+DB *state_open(const char *, int, mode_t);
+int state_close(DB *);
+int state_get(DB *, const struct sockaddr_storage *, const struct conf *,
+    struct dbinfo *);
+int state_put(DB *, const struct sockaddr_storage *, const struct conf *,
+    const struct dbinfo *);
+int state_del(DB *, const struct sockaddr_storage *, const struct conf *);
+int state_iterate(DB *, struct sockaddr_storage *, struct conf *,
+    struct dbinfo *, unsigned int);
+__END_DECLS
+
+#endif /* _STATE_H */
