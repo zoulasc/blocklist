@@ -37,6 +37,7 @@ __RCSID("$NetBSD: pwd_mkdb.c,v 1.57 2014/01/26 01:57:04 christos Exp $");
 #include <stdio.h>
 #include <string.h>
 #include <errno.h>
+#include <fcntl.h>
 #include <syslog.h>
 #include <netinet/in.h>
 
@@ -72,8 +73,11 @@ state_open(const char *dbname, int flags, mode_t perm)
 	DB *db;
 
 	db = dbopen(dbname, flags, perm, DB_HASH, &openinfo);
-	if (db == NULL)
+	if (db == NULL) {
+		if (errno == ENOENT && (flags & O_CREAT) == 0)
+			return NULL;
 		(*lfun)(LOG_ERR, "%s: can't open `%s' (%m)", __func__, dbname);
+	}
 	return db;
 }
 

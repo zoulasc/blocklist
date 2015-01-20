@@ -36,6 +36,7 @@
 typedef enum {
 	BL_INVALID,
 	BL_ADD,
+	BL_DELETE
 } bl_type_t;
 
 typedef struct blocklist *bl_t;

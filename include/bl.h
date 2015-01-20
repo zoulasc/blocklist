@@ -42,7 +42,7 @@ typedef struct {
 	char bi_msg[1024];
 } bl_info_t;
 
-#define _PATH_BLSOCK "/tmp/blsock"
+#define _PATH_BLSOCK "/var/run/blsock"
 
 __BEGIN_DECLS
 bl_t bl_create2(bool, const char *, void (*)(int, const char *, ...));

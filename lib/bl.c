@@ -92,7 +92,11 @@ bl_init(bl_t b, bool srv)
 		.sun_family = AF_LOCAL,
 		.sun_len = sizeof(sun),
 	};
+	mode_t om;
+	int rv;
+
 	strlcpy(sun.sun_path, b->b_path, sizeof(sun.sun_path));
+
 	if (srv)
 		(void)unlink(b->b_path);
 
@@ -109,8 +113,11 @@ bl_init(bl_t b, bool srv)
 	if (b->b_connected)
 		return 0;
 
-	if ((srv ? bind : connect)(b->b_fd, (const void *)&sun,
-	    (socklen_t)sizeof(sun)) == -1) {
+	om = umask(0);
+	rv = (srv ? bind : connect)(b->b_fd, (const void *)&sun,
+	    (socklen_t)sizeof(sun));
+	(void)umask(om);
+	if (rv == -1) {
 		(*b->b_fun)(LOG_ERR, "%s: %s failed (%m)", __func__,
 		    srv ? "bind" : "connect");
 		goto out;

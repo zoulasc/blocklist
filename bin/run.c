@@ -98,6 +98,7 @@ run_add(int proto, in_port_t port, const struct sockaddr_storage *ss)
 	const char *prname;
 	char poname[64], adname[128], *rv;
 	int id, e;
+	size_t off;
 
 	switch (proto) {
 	case IPPROTO_TCP:
@@ -117,7 +118,9 @@ run_add(int proto, in_port_t port, const struct sockaddr_storage *ss)
 	rv = run("add", prname, adname, poname, NULL);
 	if (rv == NULL)
 		return -1;
-	id = (int)strtoi(rv, NULL, 0, 0, INT_MAX, &e);
+	rv[strcspn(rv, "\n")] = '\0';
+	off = strncmp(rv, "OK ", 3) == 0 ? 3 : 0;
+	id = (int)strtoi(rv + off, NULL, 0, 0, INT_MAX, &e);
 	if (e) {
 		(*lfun)(LOG_ERR, "%s: bad number %s (%m)", __func__, rv);
 		id = -1;
