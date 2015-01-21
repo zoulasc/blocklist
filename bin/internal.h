@@ -1,7 +1,7 @@
 /*	$NetBSD$	*/
 
 /*-
- * Copyright (c) 2014 The NetBSD Foundation, Inc.
+ * Copyright (c) 2015 The NetBSD Foundation, Inc.
  * All rights reserved.
  *
  * This code is derived from software contributed to The NetBSD Foundation
@@ -33,7 +33,7 @@
 
 #define	_PATH_BLCONF	"/etc/blocklistd/conf"
 #define	_PATH_BLCONTROL	"/etc/blocklistd/control"
-#define	_PATH_BLSTATE	"/var/run/blocklistd.db"
+#define	_PATH_BLSTATE	"/var/db/blocklistd.db"
 
 struct conf *conf;
 size_t nconf;

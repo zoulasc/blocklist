@@ -1,7 +1,7 @@
 /*	$NetBSD$	*/
 
 /*-
- * Copyright (c) 2015 The NetBSD Foundation, Inc.
+ * Copyright (c) 2014 The NetBSD Foundation, Inc.
  * All rights reserved.
  *
  * This code is derived from software contributed to The NetBSD Foundation
@@ -28,31 +28,74 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-#ifndef _STATE_H
-#define _STATE_H
+#include <sys/cdefs.h>
+__RCSID("$NetBSD$");
 
-#include <db.h>
-#include <time.h>
+#include <stdio.h>
+#include <bl.h>
 
-struct dbinfo {
-	int count;
-	time_t last;
-	char id[64];
-};
+#include <stdarg.h>
+#include <errno.h>
+#include <string.h>
+#include <stdlib.h>
+static const char *
+expandm(char *buf, size_t len, const char *fmt)
+{
+	char *p;
+	size_t r;
 
-__BEGIN_DECLS
-struct sockaddr_storage;
-struct conf;
+	if ((p = strstr(fmt, "%m")) == NULL)
+		return fmt;
 
-DB *state_open(const char *, int, mode_t);
-int state_close(DB *);
-int state_get(DB *, const struct sockaddr_storage *, const struct conf *,
-    struct dbinfo *);
-int state_put(DB *, const struct sockaddr_storage *, const struct conf *,
-    const struct dbinfo *);
-int state_del(DB *, const struct sockaddr_storage *, const struct conf *);
-int state_iterate(DB *, struct sockaddr_storage *, struct conf *,
-    struct dbinfo *, unsigned int);
-__END_DECLS
+	r = (size_t)(p - fmt);
+	if (r >= len)
+		return fmt;
 
-#endif /* _STATE_H */
+	strlcpy(buf, fmt, r + 1);
+	strlcat(buf, strerror(errno), len);
+	strlcat(buf, fmt + r + 2, len);
+
+	return buf;
+}
+
+static void
+dlog(int level, const char *fmt, ...)
+{
+	char buf[BUFSIZ];
+	va_list ap;
+
+	fprintf(stderr, "%s: ", getprogname());
+	va_start(ap, fmt);
+	vfprintf(stderr, expandm(buf, sizeof(buf), fmt), ap);
+	va_end(ap);
+	fprintf(stderr, "\n");
+}
+
+int
+blocklist(int action, int rfd, const char *msg)
+{
+	struct blocklist *bl;
+	int rv;
+	if ((bl = blocklist_open()) == NULL)
+		return -1;
+	rv = blocklist_r(bl, action, rfd, msg);
+	blocklist_close(bl);
+	return rv;
+}
+
+int
+blocklist_r(struct blocklist *bl, int action, int rfd, const char *msg)
+{
+	return bl_send(bl, action ? BL_ADD : BL_DELETE, rfd, msg);
+}
+
+struct blocklist *
+blocklist_open(void) {
+	return bl_create(false, NULL, dlog);
+}
+
+void
+blocklist_close(struct blocklist *bl)
+{
+	bl_destroy(bl);
+}

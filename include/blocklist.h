@@ -1,7 +1,7 @@
 /*	$NetBSD$	*/
 
 /*-
- * Copyright (c) 2015 The NetBSD Foundation, Inc.
+ * Copyright (c) 2014 The NetBSD Foundation, Inc.
  * All rights reserved.
  *
  * This code is derived from software contributed to The NetBSD Foundation
@@ -28,31 +28,15 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-#ifndef _STATE_H
-#define _STATE_H
-
-#include <db.h>
-#include <time.h>
-
-struct dbinfo {
-	int count;
-	time_t last;
-	char id[64];
-};
+#ifndef _BLOCKLIST_H
+#define _BLOCKLIST_H
 
 __BEGIN_DECLS
-struct sockaddr_storage;
-struct conf;
-
-DB *state_open(const char *, int, mode_t);
-int state_close(DB *);
-int state_get(DB *, const struct sockaddr_storage *, const struct conf *,
-    struct dbinfo *);
-int state_put(DB *, const struct sockaddr_storage *, const struct conf *,
-    const struct dbinfo *);
-int state_del(DB *, const struct sockaddr_storage *, const struct conf *);
-int state_iterate(DB *, struct sockaddr_storage *, struct conf *,
-    struct dbinfo *, unsigned int);
+struct blocklist;
+int blocklist(int, int, const char *);
+int blocklist_r(struct blocklist *, int, int, const char *);
+struct blocklist *blocklist_open(void);
+void blocklist_close(struct blocklist *);
 __END_DECLS
 
-#endif /* _STATE_H */
+#endif /* _BLOCKLIST_H */

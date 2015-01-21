@@ -1,4 +1,4 @@
-/*	$NetBSD: pwd_mkdb.c,v 1.57 2014/01/26 01:57:04 christos Exp $	*/
+/*	$NetBSD$	*/
 
 /*-
  * Copyright (c) 2015 The NetBSD Foundation, Inc.
@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__RCSID("$NetBSD: pwd_mkdb.c,v 1.57 2014/01/26 01:57:04 christos Exp $");
+__RCSID("$NetBSD$");
 
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -161,10 +161,9 @@ state_get(DB *db, const struct sockaddr_storage *ss, const struct conf *c,
 	switch (rv = (*db->get)(db, &k, &v, 0)) {
 	case 0:
 	case 1:
-		if (rv) {
+		if (rv)
 			memset(dbi, 0, sizeof(*dbi));
-			dbi->id = -1;
-		} else
+		else
 			memcpy(dbi, v.data, sizeof(*dbi));
 		if (debug)
 			printf("%s: returns %d\n", __func__, rv);

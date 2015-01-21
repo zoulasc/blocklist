@@ -1,13 +1,14 @@
-.include <bsd.own.mk>
+# $NetBSD$
 
-WARNS=6
-COPTS=-g
-MKMAN=no
-PROGS=srvtest cltest blocklistd
-SRCS.srvtest = bl.c srvtest.c
-SRCS.cltest = cltest.c
-SRCS.blocklistd = bl.c blocklistd.c conf.c run.c state.c
-LDADD.blocklistd += -lutil
-LPADD.blocklistd += ${LIBUTIL}
+BINDIR=/usr/sbin
+
+PROGS=blocklistd blocklistctl
+MAN=blocklistd.8
+MLINKS=blocklistd.8 blocklistd.conf.5
+SRCS.blocklistd = blocklistd.c conf.c run.c state.c
+SRCS.blocklistctl = blocklistctl.c conf.c state.c
+
+LDADD+=-lutil
+DPADD+=${LIBUTIL}
 
 .include <bsd.prog.mk>
