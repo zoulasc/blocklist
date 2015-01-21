@@ -1,4 +1,4 @@
-/*	$NetBSD: internal.h,v 1.5 2015/01/21 16:16:00 christos Exp $	*/
+/*	$NetBSD: run.c,v 1.4 2015/01/21 19:24:03 christos Exp $	*/
 
 /*-
  * Copyright (c) 2015 The NetBSD Foundation, Inc.
@@ -28,19 +28,16 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-#ifndef _INTERNAL_H
-#define _INTERNAL_H
+#include <sys/cdefs.h>
+__RCSID("$NetBSD: run.c,v 1.4 2015/01/21 19:24:03 christos Exp $");
 
-#define	_PATH_BLCONF	"/etc/blocklistd/conf"
-#define	_PATH_BLCONTROL	"/etc/blocklistd/control"
-#define	_PATH_BLSTATE	"/var/db/blocklistd.db"
+#include <stdio.h>
+#include <syslog.h>
+#include "internal.h"
 
-extern struct conf *conf;
-extern size_t nconf;
-extern int debug;
-extern const char *rulename;
-extern const char *controlprog;
-
-void (*lfun)(int, const char *, ...);
-
-#endif /* _INTERNAL_H */
+int debug;
+const char *rulename = "blocklistd";
+const char *controlprog = _PATH_BLCONTROL;
+struct conf *conf;
+size_t nconf;
+void (*lfun)(int, const char *, ...) = syslog;
