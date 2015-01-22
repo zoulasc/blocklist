@@ -1,4 +1,4 @@
-/*	$NetBSD: blocklistd.c,v 1.22 2015/01/22 20:17:34 christos Exp $	*/
+/*	$NetBSD: blocklistd.c,v 1.23 2015/01/22 21:32:30 christos Exp $	*/
 
 /*-
  * Copyright (c) 2015 The NetBSD Foundation, Inc.
@@ -32,7 +32,7 @@
 #include "config.h"
 #endif
 #include <sys/cdefs.h>
-__RCSID("$NetBSD: blocklistd.c,v 1.22 2015/01/22 20:17:34 christos Exp $");
+__RCSID("$NetBSD: blocklistd.c,v 1.23 2015/01/22 21:32:30 christos Exp $");
 
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -316,6 +316,7 @@ main(int argc, char *argv[])
 	signal(SIGUSR1, sigusr1);
 	signal(SIGUSR2, sigusr2);
 
+	openlog(getprogname(), LOG_PID, LOG_DAEMON);
 
 	if (debug) {
 		lfun = dlog;
