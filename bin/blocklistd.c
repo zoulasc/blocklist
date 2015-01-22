@@ -1,4 +1,4 @@
-/*	$NetBSD: blocklistd.c,v 1.13 2015/01/22 03:08:09 christos Exp $	*/
+/*	$NetBSD: blocklistd.c,v 1.14 2015/01/22 03:10:49 christos Exp $	*/
 
 /*-
  * Copyright (c) 2015 The NetBSD Foundation, Inc.
@@ -32,7 +32,7 @@
 #include "config.h"
 #endif
 #include <sys/cdefs.h>
-__RCSID("$NetBSD: blocklistd.c,v 1.13 2015/01/22 03:08:09 christos Exp $");
+__RCSID("$NetBSD: blocklistd.c,v 1.14 2015/01/22 03:10:49 christos Exp $");
 
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -284,7 +284,8 @@ main(int argc, char *argv[])
 		if (tout == 0)
 			tout = 5000;
 	} else {
-		daemon(0, 0);
+		if (daemon(0, 0) == -1)
+			err(EXIT_FAILURE, "daemon failed");
 		if (tout == 0)
 			tout = 15000;
 	}

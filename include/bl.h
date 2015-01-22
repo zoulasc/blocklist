@@ -1,4 +1,4 @@
-/*	$NetBSD: bl.h,v 1.7 2015/01/21 16:16:00 christos Exp $	*/
+/*	$NetBSD: bl.h,v 1.8 2015/01/22 01:39:18 christos Exp $	*/
 
 /*-
  * Copyright (c) 2014 The NetBSD Foundation, Inc.
@@ -51,7 +51,9 @@ typedef struct {
 
 #define bi_cred bi_u._bi_cred
 
+#ifndef _PATH_BLSOCK
 #define _PATH_BLSOCK "/var/run/blsock"
+#endif
 
 __BEGIN_DECLS
 

@@ -1,7 +1,7 @@
-/*	$NetBSD: internal.h,v 1.6 2015/01/21 23:26:26 christos Exp $	*/
+/*	$NetBSD: fgetln.c,v 1.9 2008/04/29 06:53:03 martin Exp $	*/
 
 /*-
- * Copyright (c) 2015 The NetBSD Foundation, Inc.
+ * Copyright (c) 1998 The NetBSD Foundation, Inc.
  * All rights reserved.
  *
  * This code is derived from software contributed to The NetBSD Foundation
@@ -28,25 +28,79 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-#ifndef _INTERNAL_H
-#define _INTERNAL_H
 
-#ifndef _PATH_BLCONF
-#define	_PATH_BLCONF	"/etc/blocklistd/conf"
-#endif
-#ifndef _PATH_BLCONTROL
-#define	_PATH_BLCONTROL	"/etc/blocklistd/control"
-#endif
-#ifndef _PATH_BLSTATE
-#define	_PATH_BLSTATE	"/var/db/blocklistd.db"
+#ifdef HAVE_CONFIG_H
+#include "config.h"
 #endif
 
-extern struct conf *conf;
-extern size_t nconf;
-extern int debug;
-extern const char *rulename;
-extern const char *controlprog;
+#if !HAVE_FGETLN
+#include <stdlib.h>
+#ifndef HAVE_NBTOOL_CONFIG_H
+/* These headers are required, but included from nbtool_config.h */
+#include <stdio.h>
+#include <unistd.h>
+#include <errno.h>
+#include <string.h>
+#endif
 
-void (*lfun)(int, const char *, ...);
+char *
+fgetln(FILE *fp, size_t *len)
+{
+	static char *buf = NULL;
+	static size_t bufsiz = 0;
+	char *ptr;
 
-#endif /* _INTERNAL_H */
+
+	if (buf == NULL) {
+		bufsiz = BUFSIZ;
+		if ((buf = malloc(bufsiz)) == NULL)
+			return NULL;
+	}
+
+	if (fgets(buf, bufsiz, fp) == NULL)
+		return NULL;
+
+	*len = 0;
+	while ((ptr = strchr(&buf[*len], '\n')) == NULL) {
+		size_t nbufsiz = bufsiz + BUFSIZ;
+		char *nbuf = realloc(buf, nbufsiz);
+
+		if (nbuf == NULL) {
+			int oerrno = errno;
+			free(buf);
+			errno = oerrno;
+			buf = NULL;
+			return NULL;
+		} else
+			buf = nbuf;
+
+		if (fgets(&buf[bufsiz], BUFSIZ, fp) == NULL) {
+			buf[bufsiz] = '\0';
+			*len = strlen(buf);
+			return buf;
+		}
+
+		*len = bufsiz;
+		bufsiz = nbufsiz;
+	}
+
+	*len = (ptr - buf) + 1;
+	return buf;
+}
+
+#endif
+
+#ifdef TEST
+int
+main(int argc, char *argv[])
+{
+	char *p;
+	size_t len;
+
+	while ((p = fgetln(stdin, &len)) != NULL) {
+		(void)printf("%zu %s", len, p);
+		free(p);
+	}
+	return 0;
+}
+#endif

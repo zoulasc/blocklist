@@ -1,13 +1,13 @@
 #
-ACLOCAL_AMFLAGS = -Im4
+ACLOCAL_AMFLAGS = -I m4
 lib_LTLIBRARIES = libblocklist.la
 include_HEADERS = blocklist.h
 
-bin_PROGRAMS = blocklistd blocklistctl
+bin_PROGRAMS = blocklistd blocklistctl srvtest cltest
 
 VPATH = ../bin:../lib:../test
 
-AM_CPPFLAGS = -I../include 
+AM_CPPFLAGS = -I../include  -DDOT="."
 AM_CFLAGS = @WARNINGS@
 
 libblocklist_la_SOURCES = bl.c blocklist.c
@@ -19,3 +19,7 @@ blocklistd_SOURCES = blocklistd.c ${SRCS}
 blocklistd_LDADD = libblocklist.la
 blocklistctl_SOURCES = blocklistctl.c ${SRCS}
 blocklistctl_LDADD = libblocklist.la
+srvtest_SOURCES = srvtest.c ${SRCS}
+srvtest_LDADD = libblocklist.la
+cltest_SOURCES = cltest.c ${SRCS}
+cltest_LDADD = libblocklist.la
