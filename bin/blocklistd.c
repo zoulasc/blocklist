@@ -1,4 +1,4 @@
-/*	$NetBSD: blocklistd.c,v 1.11 2015/01/21 23:26:26 christos Exp $	*/
+/*	$NetBSD: blocklistd.c,v 1.12 2015/01/22 01:39:18 christos Exp $	*/
 
 /*-
  * Copyright (c) 2015 The NetBSD Foundation, Inc.
@@ -33,13 +33,15 @@
 #include "port.h"
 #endif
 #include <sys/cdefs.h>
-__RCSID("$NetBSD: blocklistd.c,v 1.11 2015/01/21 23:26:26 christos Exp $");
+__RCSID("$NetBSD: blocklistd.c,v 1.12 2015/01/22 01:39:18 christos Exp $");
 
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <sys/queue.h>
 
+#ifdef HAVE_UTIL_H
 #include <util.h>
+#endif
 #include <string.h>
 #include <signal.h>
 #include <netdb.h>
@@ -56,7 +58,6 @@ __RCSID("$NetBSD: blocklistd.c,v 1.11 2015/01/21 23:26:26 christos Exp $");
 #include <err.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <util.h>
 #include <time.h>
 
 #include "bl.h"
@@ -64,7 +65,7 @@ __RCSID("$NetBSD: blocklistd.c,v 1.11 2015/01/21 23:26:26 christos Exp $");
 #include "conf.h"
 #include "run.h"
 #include "state.h"
-#include "util.h"
+#include "support.h"
 
 static const char *configfile = _PATH_BLCONF;
 static DB *state;
