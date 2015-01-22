@@ -1,4 +1,5 @@
 #
+ACLOCAL_AMFLAGS = -Im4
 lib_LTLIBRARIES = libblocklist.la
 include_HEADERS = blocklist.h
 
@@ -6,7 +7,7 @@ bin_PROGRAMS = blocklistd blocklistctl
 
 VPATH = ../bin:../lib:../test
 
-AM_CPPFLAGS = -I../include -I../bin/include
+AM_CPPFLAGS = -I../include 
 AM_CFLAGS = @WARNINGS@
 
 libblocklist_la_SOURCES = bl.c blocklist.c
