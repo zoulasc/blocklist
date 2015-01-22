@@ -1,4 +1,4 @@
-/*	$NetBSD: blocklistctl.c,v 1.5 2015/01/22 01:39:18 christos Exp $	*/
+/*	$NetBSD: blocklistctl.c,v 1.6 2015/01/22 03:08:09 christos Exp $	*/
 
 /*-
  * Copyright (c) 2015 The NetBSD Foundation, Inc.
@@ -30,11 +30,10 @@
  */
 #ifdef HAVE_CONFIG_H
 #include "config.h"
-#include "port.h"
 #endif
 
 #include <sys/cdefs.h>
-__RCSID("$NetBSD: blocklistctl.c,v 1.5 2015/01/22 01:39:18 christos Exp $");
+__RCSID("$NetBSD: blocklistctl.c,v 1.6 2015/01/22 03:08:09 christos Exp $");
 
 #include <stdio.h>
 #include <time.h>
@@ -51,7 +50,7 @@ __RCSID("$NetBSD: blocklistctl.c,v 1.5 2015/01/22 01:39:18 christos Exp $");
 #include "conf.h"
 #include "state.h"
 #include "internal.h"
-#include "util.h"
+#include "support.h"
 
 static __dead void
 usage(int c)
