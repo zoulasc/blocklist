@@ -1,4 +1,4 @@
-/*	$NetBSD$	*/
+/*	$NetBSD: blocklist.h,v 1.1 2015/01/21 16:16:00 christos Exp $	*/
 
 /*-
  * Copyright (c) 2014 The NetBSD Foundation, Inc.
@@ -32,11 +32,13 @@
 #define _BLOCKLIST_H
 
 __BEGIN_DECLS
-struct blocklist;
-int blocklist(int, int, const char *);
-int blocklist_r(struct blocklist *, int, int, const char *);
 struct blocklist *blocklist_open(void);
 void blocklist_close(struct blocklist *);
+int blocklist(int, int, const char *);
+int blocklist_r(struct blocklist *, int, int, const char *);
+int blocklist_sa(int, int, const struct sockaddr *, socklen_t, const char *);
+int blocklist_sa_r(struct blocklist *, int, int,
+    const struct sockaddr *, socklen_t, const char *);
 __END_DECLS
 
 #endif /* _BLOCKLIST_H */

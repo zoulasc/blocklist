@@ -1,4 +1,4 @@
-/*	$NetBSD: blocklist.c,v 1.2 2015/01/22 02:42:56 christos Exp $	*/
+/*	$NetBSD: blocklist.c,v 1.3 2015/01/22 03:10:49 christos Exp $	*/
 
 /*-
  * Copyright (c) 2014 The NetBSD Foundation, Inc.
@@ -33,7 +33,7 @@
 #endif
 
 #include <sys/cdefs.h>
-__RCSID("$NetBSD: blocklist.c,v 1.2 2015/01/22 02:42:56 christos Exp $");
+__RCSID("$NetBSD: blocklist.c,v 1.3 2015/01/22 03:10:49 christos Exp $");
 
 #include <stdio.h>
 #include <bl.h>
@@ -76,21 +76,35 @@ dlog(int level __unused, const char *fmt, ...)
 }
 
 int
-blocklist(int action, int rfd, const char *msg)
+blocklist_sa(int action, int rfd, const struct sockaddr *sa, socklen_t salen,
+    const char *msg)
 {
 	struct blocklist *bl;
 	int rv;
 	if ((bl = blocklist_open()) == NULL)
 		return -1;
-	rv = blocklist_r(bl, action, rfd, msg);
+	rv = blocklist_sa_r(bl, action, rfd, sa, salen, msg);
 	blocklist_close(bl);
 	return rv;
 }
 
 int
+blocklist_sa_r(struct blocklist *bl, int action, int rfd,
+	const struct sockaddr *sa, socklen_t slen, const char *msg)
+{
+	return bl_send(bl, action ? BL_ADD : BL_DELETE, rfd, sa, slen, msg);
+}
+
+int
+blocklist(int action, int rfd, const char *msg)
+{
+	return blocklist_sa(action, rfd, NULL, 0, msg);
+}
+
+int
 blocklist_r(struct blocklist *bl, int action, int rfd, const char *msg)
 {
-	return bl_send(bl, action ? BL_ADD : BL_DELETE, rfd, msg);
+	return blocklist_sa_r(bl, action, rfd, NULL, 0, msg);
 }
 
 struct blocklist *
