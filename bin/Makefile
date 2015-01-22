@@ -1,6 +1,6 @@
-# $NetBSD: Makefile,v 1.8 2015/01/21 23:26:26 christos Exp $
+# $NetBSD: Makefile,v 1.9 2015/01/22 03:08:09 christos Exp $
 
-BINDIR=/usr/sbin
+BINDIR=/sbin
 
 PROGS=blocklistd blocklistctl
 MAN.blocklistd=blocklistd.8
