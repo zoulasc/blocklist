@@ -1,4 +1,4 @@
-/*	$NetBSD: internal.h,v 1.6 2015/01/21 23:26:26 christos Exp $	*/
+/*	$NetBSD: internal.h,v 1.7 2015/01/22 03:48:07 christos Exp $	*/
 
 /*-
  * Copyright (c) 2015 The NetBSD Foundation, Inc.
@@ -36,6 +36,9 @@
 #endif
 #ifndef _PATH_BLCONTROL
 #define	_PATH_BLCONTROL	"/etc/blocklistd/control"
+#endif
+#ifndef _PATH_BLSOCKETS
+#define	_PATH_BLSOCKETS	"/etc/blocklistd/sockets"
 #endif
 #ifndef _PATH_BLSTATE
 #define	_PATH_BLSTATE	"/var/db/blocklistd.db"
