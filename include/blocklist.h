@@ -1,4 +1,4 @@
-/*	$NetBSD: blocklist.h,v 1.1 2015/01/21 16:16:00 christos Exp $	*/
+/*	$NetBSD: blocklist.h,v 1.2 2015/01/22 05:35:55 christos Exp $	*/
 
 /*-
  * Copyright (c) 2014 The NetBSD Foundation, Inc.
@@ -30,6 +30,8 @@
  */
 #ifndef _BLOCKLIST_H
 #define _BLOCKLIST_H
+
+#include <sys/socket.h>
 
 __BEGIN_DECLS
 struct blocklist *blocklist_open(void);
