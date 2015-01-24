@@ -1,4 +1,4 @@
-/*	$NetBSD: state.h,v 1.2 2015/01/21 16:16:00 christos Exp $	*/
+/*	$NetBSD: state.h,v 1.3 2015/01/22 03:08:09 christos Exp $	*/
 
 /*-
  * Copyright (c) 2015 The NetBSD Foundation, Inc.
@@ -59,6 +59,7 @@ int state_put(DB *, const struct sockaddr_storage *, const struct conf *,
 int state_del(DB *, const struct sockaddr_storage *, const struct conf *);
 int state_iterate(DB *, struct sockaddr_storage *, struct conf *,
     struct dbinfo *, unsigned int);
+int state_sync(DB *);
 __END_DECLS
 
 #endif /* _STATE_H */
