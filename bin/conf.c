@@ -1,4 +1,4 @@
-/*	$NetBSD: conf.c,v 1.13 2015/01/22 16:19:53 christos Exp $	*/
+/*	$NetBSD: conf.c,v 1.14 2015/01/25 20:59:39 christos Exp $	*/
 
 /*-
  * Copyright (c) 2015 The NetBSD Foundation, Inc.
@@ -33,7 +33,7 @@
 #endif
 
 #include <sys/cdefs.h>
-__RCSID("$NetBSD: conf.c,v 1.13 2015/01/22 16:19:53 christos Exp $");
+__RCSID("$NetBSD: conf.c,v 1.14 2015/01/25 20:59:39 christos Exp $");
 
 #include <stdio.h>
 #include <string.h>
@@ -60,9 +60,9 @@ __RCSID("$NetBSD: conf.c,v 1.13 2015/01/22 16:19:53 christos Exp $");
 
 
 struct sockaddr_if {
-        uint8_t         sif_len;
-	sa_family_t     sif_family;
-	in_port_t       sif_port;
+	uint8_t		sif_len;
+	sa_family_t	sif_family;
+	in_port_t	sif_port;
 	char		sif_name[16];
 };
 
