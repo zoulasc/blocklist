@@ -1,10 +1,10 @@
-#	$NetBSD: Makefile,v 1.1 2015/01/22 17:49:41 christos Exp $
+#	$NetBSD: Makefile,v 1.2 2015/01/23 21:33:50 christos Exp $
 
 SUBDIR=rc.d
 
 FILESDIR=               /usr/share/examples/blocklist
 FILESMODE=    644
-FILES=	blocklistd.conf
+FILES=	blocklistd.conf npf.conf
 
 .include <bsd.files.mk>
 .include <bsd.subdir.mk>
