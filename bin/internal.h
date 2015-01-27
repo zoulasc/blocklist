@@ -1,4 +1,4 @@
-/*	$NetBSD: internal.h,v 1.10 2015/01/22 21:32:30 christos Exp $	*/
+/*	$NetBSD: internal.h,v 1.11 2015/01/25 20:59:39 christos Exp $	*/
 
 /*-
  * Copyright (c) 2015 The NetBSD Foundation, Inc.
@@ -41,13 +41,13 @@
 #define	_PATH_BLSTATE	"/var/db/blocklistd.db"
 #endif
 
-extern struct conf *conf;
-extern size_t nconf;
+extern struct confset rconf, lconf;
 extern int debug;
 extern const char *rulename;
 extern const char *controlprog;
 extern struct ifaddrs *ifas;
 
-void (*lfun)(int, const char *, ...);
+void (*lfun)(int, const char *, ...)
+    __attribute__((__format__(__printf__, 2, 3)));
 
 #endif /* _INTERNAL_H */
