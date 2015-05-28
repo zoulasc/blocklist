@@ -1,4 +1,4 @@
-/*	$NetBSD: bl.c,v 1.24 2015/02/03 01:22:08 christos Exp $	*/
+/*	$NetBSD: bl.c,v 1.25 2015/05/27 22:37:13 christos Exp $	*/
 
 /*-
  * Copyright (c) 2014 The NetBSD Foundation, Inc.
@@ -33,7 +33,7 @@
 #endif
 
 #include <sys/cdefs.h>
-__RCSID("$NetBSD: bl.c,v 1.24 2015/02/03 01:22:08 christos Exp $");
+__RCSID("$NetBSD: bl.c,v 1.25 2015/05/27 22:37:13 christos Exp $");
 
 #include <sys/param.h>
 #include <sys/types.h>
@@ -483,6 +483,10 @@ bl_recv(bl_t b)
 	bi->bi_type = ub.bl.bl_type;
 	bi->bi_slen = ub.bl.bl_salen;
 	bi->bi_ss = ub.bl.bl_ss;
+#ifndef CRED_MESSAGE
+	bi->bi_uid = -1;
+	bi->bi_gid = -1;
+#endif
 	strlcpy(bi->bi_msg, ub.bl.bl_data, MIN(sizeof(bi->bi_msg),
 	    ((size_t)rlen - sizeof(ub.bl) + 1)));
 	return bi;
