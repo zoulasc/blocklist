@@ -11,7 +11,7 @@
 +static struct blocklist *blstate;
 +
 +void
-+pfilter_init()
++pfilter_init(void)
 +{
 +	blstate = blocklist_open();
 +}
