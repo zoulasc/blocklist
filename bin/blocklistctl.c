@@ -1,4 +1,4 @@
-/*	$NetBSD: blocklistctl.c,v 1.17 2015/02/02 22:01:55 christos Exp $	*/
+/*	$NetBSD: blocklistctl.c,v 1.18 2015/06/02 14:02:10 christos Exp $	*/
 
 /*-
  * Copyright (c) 2015 The NetBSD Foundation, Inc.
@@ -33,7 +33,7 @@
 #endif
 
 #include <sys/cdefs.h>
-__RCSID("$NetBSD: blocklistctl.c,v 1.17 2015/02/02 22:01:55 christos Exp $");
+__RCSID("$NetBSD: blocklistctl.c,v 1.18 2015/06/02 14:02:10 christos Exp $");
 
 #include <stdio.h>
 #include <time.h>
@@ -85,7 +85,7 @@ main(int argc, char *argv[])
 	argc--;
 	argv++;
 
-	while ((o = getopt(argc, argv, "abD:drw")) != -1)
+	while ((o = getopt(argc, argv, "abD:dnrw")) != -1)
 		switch (o) {
 		case 'a':
 			all = 1;
