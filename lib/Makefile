@@ -1,10 +1,11 @@
-# $NetBSD: Makefile,v 1.4 2015/12/30 16:42:48 christos Exp $
+# $NetBSD: Makefile,v 1.5 2015/12/30 17:57:20 christos Exp $
+
+.include <bsd.own.mk>
 
 USE_SHLIBDIR=   yes
 
 CPPFLAGS+=-D_REENTRANT
-DPADD+=${LIBPTHREAD}
-LDADD+=-lpthread
+LIBDPLIBS+=pthread ${NETBSDSRCDIR}/lib/libpthread
 LIB=blocklist
 SRCS=bl.c blocklist.c
 MAN=libblocklist.3
