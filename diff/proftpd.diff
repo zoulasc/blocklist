@@ -9,12 +9,6 @@
 +OBJS+= pfilter.o
 +BUILD_OBJS+= src/pfilter.o
 +
-$NetBSD: patch-Makefile.in,v 1.1 2015/07/13 15:39:27 he Exp $
-
-Make this pkgsrc friendly.
-
-Linking ftpdctl does not (seem to) require all the libraries needed for
-various proftpd modules.  It definitely cannot include -lwrap.
 
 --- /dev/null	2016-01-22 17:30:55.000000000 -0500
 +++ include/pfilter.h	2016-01-22 16:18:33.000000000 -0500
