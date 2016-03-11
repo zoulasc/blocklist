@@ -80,5 +80,5 @@ int clock_gettime(int, struct timespec *);
 
 #define _PATH_BLCONF "conf"
 #define _PATH_BLCONTROL "control"
-#define _PATH_BLSOCK "blsock"
+#define _PATH_BLSOCK "blocklistd.sock"
 #define _PATH_BLSTATE "blocklistd.db"
