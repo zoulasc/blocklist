@@ -1,4 +1,4 @@
-/*	$NetBSD: blocklistd.c,v 1.32 2015/01/28 22:30:42 christos Exp $	*/
+/*	$NetBSD: blocklistd.c,v 1.33 2015/06/21 01:13:21 christos Exp $	*/
 
 /*-
  * Copyright (c) 2015 The NetBSD Foundation, Inc.
@@ -32,12 +32,15 @@
 #include "config.h"
 #endif
 #include <sys/cdefs.h>
-__RCSID("$NetBSD: blocklistd.c,v 1.32 2015/01/28 22:30:42 christos Exp $");
+__RCSID("$NetBSD: blocklistd.c,v 1.33 2015/06/21 01:13:21 christos Exp $");
 
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <sys/queue.h>
 
+#ifdef HAVE_LIBUTIL_H
+#include <libutil.h>
+#endif
 #ifdef HAVE_UTIL_H
 #include <util.h>
 #endif
