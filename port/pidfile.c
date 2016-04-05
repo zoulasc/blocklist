@@ -1,4 +1,4 @@
-/*	$NetBSD: pidfile.c,v 1.9 2011/03/29 13:55:37 jmmv Exp $	*/
+/*	$NetBSD: pidfile.c,v 1.1 2015/01/22 16:19:53 christos Exp $	*/
 
 /*-
  * Copyright (c) 1999 The NetBSD Foundation, Inc.
@@ -34,7 +34,7 @@
 
 #include <sys/cdefs.h>
 #if defined(LIBC_SCCS) && !defined(lint)
-__RCSID("$NetBSD: pidfile.c,v 1.9 2011/03/29 13:55:37 jmmv Exp $");
+__RCSID("$NetBSD: pidfile.c,v 1.1 2015/01/22 16:19:53 christos Exp $");
 #endif
 
 #include <sys/param.h>
@@ -45,6 +45,9 @@ __RCSID("$NetBSD: pidfile.c,v 1.9 2011/03/29 13:55:37 jmmv Exp $");
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
+#ifdef HAVE_LIBUTIL_H
+#include <libutil.h>
+#endif
 #ifdef HAVE_UTIL_H
 #include <util.h>
 #endif
