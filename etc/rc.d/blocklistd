@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $NetBSD: blocklistd,v 1.15 2004/10/11 13:29:52 lukem Exp $
+# $NetBSD: blocklistd,v 1.1 2015/01/22 17:49:41 christos Exp $
 #
 
 # PROVIDE: blocklistd
@@ -18,7 +18,7 @@ start_precmd="${name}_precmd"
 extra_commands="reload"
 
 _sockfile="/var/run/${name}.sockets"
-_sockname="blsock"
+_sockname="blocklistd.sock"
 
 blocklistd_precmd()
 {
