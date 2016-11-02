@@ -1,4 +1,4 @@
-/*	$NetBSD: blocklistctl.c,v 1.19 2015/11/04 16:21:52 christos Exp $	*/
+/*	$NetBSD: blocklistctl.c,v 1.20 2016/04/04 15:52:56 christos Exp $	*/
 
 /*-
  * Copyright (c) 2015 The NetBSD Foundation, Inc.
@@ -33,7 +33,7 @@
 #endif
 
 #include <sys/cdefs.h>
-__RCSID("$NetBSD: blocklistctl.c,v 1.19 2015/11/04 16:21:52 christos Exp $");
+__RCSID("$NetBSD: blocklistctl.c,v 1.20 2016/04/04 15:52:56 christos Exp $");
 
 #include <stdio.h>
 #include <time.h>
@@ -96,9 +96,9 @@ main(int argc, char *argv[])
 			break;
 		case 'b':
 			blocked = 1;
+			break;
 		case 'D':
 			dbname = optarg;
-			break;
 			break;
 		case 'd':
 			debug++;
