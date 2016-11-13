@@ -5,7 +5,7 @@ include_HEADERS = blocklist.h
 
 bin_PROGRAMS = blocklistd blocklistctl srvtest cltest
 
-VPATH = ../bin:../lib:../test
+VPATH = ../bin:../lib:../test:../include
 
 AM_CPPFLAGS = -I../include  -DDOT="."
 AM_CFLAGS = @WARNINGS@
