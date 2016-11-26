@@ -1,7 +1,7 @@
 #
 ACLOCAL_AMFLAGS = -I m4
 lib_LTLIBRARIES = libblocklist.la
-include_HEADERS = blocklist.h
+include_HEADERS = ../include/blocklist.h
 
 bin_PROGRAMS = blocklistd blocklistctl srvtest cltest
 
