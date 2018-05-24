@@ -1,4 +1,4 @@
-/*	$NetBSD: blocklistctl.c,v 1.21 2016/11/02 03:15:07 jnemeth Exp $	*/
+/*	$NetBSD: blocklistctl.c,v 1.22 2018/05/24 19:19:37 christos Exp $	*/
 
 /*-
  * Copyright (c) 2015 The NetBSD Foundation, Inc.
@@ -33,7 +33,7 @@
 #endif
 
 #include <sys/cdefs.h>
-__RCSID("$NetBSD: blocklistctl.c,v 1.21 2016/11/02 03:15:07 jnemeth Exp $");
+__RCSID("$NetBSD: blocklistctl.c,v 1.22 2018/05/24 19:19:37 christos Exp $");
 
 #include <stdio.h>
 #include <time.h>
@@ -160,7 +160,8 @@ main(int argc, char *argv[])
 			else
 				fmttime(buf, sizeof(buf), dbi.last);
 		}
-		printf("%s\t%d/%d\t%-s\n", dbi.id, dbi.count, c.c_nfail, buf);
+		printf("%s\t%d/%s\t%-s\n", dbi.id, dbi.count,
+		    star(mbuf, sizeof(mbuf), c.c_nfail), buf);
 	}
 	state_close(db);
 	return EXIT_SUCCESS;
