@@ -1,4 +1,4 @@
-/*	$NetBSD: support.c,v 1.8 2016/04/04 15:52:56 christos Exp $	*/
+/*	$NetBSD: support.c,v 1.9 2018/09/18 22:12:19 christos Exp $	*/
 
 /*-
  * Copyright (c) 2015 The NetBSD Foundation, Inc.
@@ -33,7 +33,7 @@
 #endif
 
 #include <sys/cdefs.h>
-__RCSID("$NetBSD: support.c,v 1.8 2016/04/04 15:52:56 christos Exp $");
+__RCSID("$NetBSD: support.c,v 1.9 2018/09/18 22:12:19 christos Exp $");
 
 #include <time.h>
 #include <string.h>
