@@ -1,4 +1,4 @@
-/*	$NetBSD: blocklist.h,v 1.2 2015/01/22 05:35:55 christos Exp $	*/
+/*	$NetBSD: blocklist.h,v 1.3 2015/01/23 18:48:56 christos Exp $	*/
 
 /*-
  * Copyright (c) 2014 The NetBSD Foundation, Inc.
@@ -42,5 +42,14 @@ int blocklist_sa(int, int, const struct sockaddr *, socklen_t, const char *);
 int blocklist_sa_r(struct blocklist *, int, int,
     const struct sockaddr *, socklen_t, const char *);
 __END_DECLS
+
+/* action values for user applications */
+#define BLOCKLIST_API_ENUM	1
+enum {
+        BLOCKLIST_AUTH_OK = 0,
+        BLOCKLIST_AUTH_FAIL,
+        BLOCKLIST_ABUSIVE_BEHAVIOR,
+        BLOCKLIST_BAD_USER
+};
 
 #endif /* _BLOCKLIST_H */
