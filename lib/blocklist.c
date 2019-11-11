@@ -1,4 +1,4 @@
-/*	$NetBSD: blocklist.c,v 1.5 2015/01/22 16:19:53 christos Exp $	*/
+/*	$NetBSD: blocklist.c,v 1.6 2019/11/06 20:50:01 christos Exp $	*/
 
 /*-
  * Copyright (c) 2014 The NetBSD Foundation, Inc.
@@ -33,7 +33,7 @@
 #endif
 
 #include <sys/cdefs.h>
-__RCSID("$NetBSD: blocklist.c,v 1.5 2015/01/22 16:19:53 christos Exp $");
+__RCSID("$NetBSD: blocklist.c,v 1.6 2019/11/06 20:50:01 christos Exp $");
 
 #include <stdio.h>
 #include <bl.h>
@@ -61,7 +61,7 @@ int
 blocklist_sa_r(struct blocklist *bl, int action, int rfd,
 	const struct sockaddr *sa, socklen_t slen, const char *msg)
 {
-	int internal_action;
+	bl_type_t internal_action;
 
 	/* internal values are not the same as user application values */
 	switch (action) {
