@@ -1,4 +1,4 @@
-/*	$NetBSD: blocklistd.c,v 1.39 2019/11/06 20:50:01 christos Exp $	*/
+/*	$NetBSD: blocklistd.c,v 1.40 2020/03/10 13:36:07 roy Exp $	*/
 
 /*-
  * Copyright (c) 2015 The NetBSD Foundation, Inc.
@@ -32,7 +32,7 @@
 #include "config.h"
 #endif
 #include <sys/cdefs.h>
-__RCSID("$NetBSD: blocklistd.c,v 1.39 2019/11/06 20:50:01 christos Exp $");
+__RCSID("$NetBSD: blocklistd.c,v 1.40 2020/03/10 13:36:07 roy Exp $");
 
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -119,12 +119,14 @@ getremoteaddress(bl_info_t *bi, struct sockaddr_storage *rss, socklen_t *rsl)
 	*rsl = sizeof(*rss);
 	memset(rss, 0, *rsl);
 
-	if (getpeername(bi->bi_fd, (void *)rss, rsl) != -1)
-		return 0;
+	if (bi->bi_fd != -1) {
+		if (getpeername(bi->bi_fd, (void *)rss, rsl) != -1)
+			return 0;
 
-	if (errno != ENOTCONN) {
-		(*lfun)(LOG_ERR, "getpeername failed (%m)");
-		return -1;
+		if (errno != ENOTCONN) {
+			(*lfun)(LOG_ERR, "getpeername failed (%m)");
+			return -1;
+		}
 	}
 
 	if (bi->bi_slen == 0) {
