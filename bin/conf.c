@@ -1009,14 +1009,6 @@ conf_find(int fd, uid_t uid, const struct sockaddr_storage *rss,
 	char buf[BUFSIZ];
 
 	memset(cr, 0, sizeof(*cr));
-
-	if (fd == -1) {
-		cr->c_proto = FSTAR;
-		cr->c_port = FSTAR;
-		memcpy(&lss, rss, sizeof(lss));
-		goto done_fd;
-	}
-
 	slen = sizeof(lss);
 	memset(&lss, 0, slen);
 	if (getsockname(fd, (void *)&lss, &slen) == -1) {
@@ -1059,7 +1051,6 @@ conf_find(int fd, uid_t uid, const struct sockaddr_storage *rss,
 		return NULL;
 	}
 
-done_fd:
 	cr->c_ss = lss;
 	cr->c_lmask = FSTAR;
 	cr->c_uid = (int)uid;

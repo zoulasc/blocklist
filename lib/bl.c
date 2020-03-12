@@ -384,6 +384,7 @@ bl_send(bl_t b, bl_type_t e, int pfd, const struct sockaddr *sa,
 	if (bl_getsock(b, &ub.bl.bl_ss, sa, slen, ctx) == -1)
 		return -1;
 
+
 	ub.bl.bl_salen = slen;
 	memcpy(ub.bl.bl_data, ctx, ctxlen);
 
@@ -393,17 +394,15 @@ bl_send(bl_t b, bl_type_t e, int pfd, const struct sockaddr *sa,
 	msg.msg_iovlen = 1;
 	msg.msg_flags = 0;
 
-	if (pfd != -1) {
-		msg.msg_control = ua.ctrl;
-		msg.msg_controllen = sizeof(ua.ctrl);
+	msg.msg_control = ua.ctrl;
+	msg.msg_controllen = sizeof(ua.ctrl);
 
-		cmsg = CMSG_FIRSTHDR(&msg);
-		cmsg->cmsg_len = CMSG_LEN(sizeof(int));
-		cmsg->cmsg_level = SOL_SOCKET;
-		cmsg->cmsg_type = SCM_RIGHTS;
+	cmsg = CMSG_FIRSTHDR(&msg);
+	cmsg->cmsg_len = CMSG_LEN(sizeof(int));
+	cmsg->cmsg_level = SOL_SOCKET;
+	cmsg->cmsg_type = SCM_RIGHTS;
 
-		memcpy(CMSG_DATA(cmsg), &pfd, sizeof(pfd));
-	}
+	memcpy(CMSG_DATA(cmsg), &pfd, sizeof(pfd));
 
 	tried = 0;
 again:
@@ -495,15 +494,14 @@ bl_recv(bl_t b)
 
 	}
 
-	if (!(got & GOT_FD))
-		bi->bi_fd = -1;
-
+	if (got != (GOT_CRED|GOT_FD)) {
+		bl_log(b->b_fun, LOG_ERR, "message missing %s %s",
 #if GOT_CRED != 0
-	if (!(got & GOT_CRED)) {
-		bl_log(b->b_fun, LOG_ERR, "message missing cred");
+		    (got & GOT_CRED) == 0 ? "cred" :
+#endif
+		    "", (got & GOT_FD) == 0 ? "fd" : "");
 		return NULL;
 	}
-#endif
 
 	if ((size_t)rlen <= sizeof(ub.bl)) {
 		bl_log(b->b_fun, LOG_ERR, "message too short %zd", rlen);
