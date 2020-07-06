@@ -80,9 +80,9 @@ add)
 	iptables)
 		if ! /sbin/iptables --list "$2" >/dev/null 2>&1; then
 			/sbin/iptables --new-chain "$2"
-			/sbin/iptables --append INPUT --proto "$raw_proto" \
-			    --dport "$raw_port" --jump "$2"
 		fi
+		/sbin/iptables --append INPUT --proto "$raw_proto" \
+		    --dport "$raw_port" --jump "$2"
 		/sbin/iptables --append "$2" --proto "$raw_proto" \
 		    --source "$addr/$mask" --dport "$raw_port" --jump DROP
 		echo OK
