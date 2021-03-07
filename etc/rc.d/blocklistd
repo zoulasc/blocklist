@@ -4,7 +4,7 @@
 #
 
 # PROVIDE: blocklistd
-# REQUIRE: npf
+# REQUIRE: npf pf ipfilter
 # BEFORE:  SERVERS
 
 $_rc_subr_loaded . /etc/rc.subr
