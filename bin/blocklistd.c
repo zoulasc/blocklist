@@ -1,4 +1,4 @@
-/*	$NetBSD: blocklistd.c,v 1.42 2020/03/11 02:33:18 roy Exp $	*/
+/*	$NetBSD: blocklistd.c,v 1.2 2022/06/11 19:15:58 christos Exp $	*/
 
 /*-
  * Copyright (c) 2015 The NetBSD Foundation, Inc.
@@ -32,7 +32,7 @@
 #include "config.h"
 #endif
 #include <sys/cdefs.h>
-__RCSID("$NetBSD: blocklistd.c,v 1.42 2020/03/11 02:33:18 roy Exp $");
+__RCSID("$NetBSD: blocklistd.c,v 1.2 2022/06/11 19:15:58 christos Exp $");
 
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -105,7 +105,7 @@ sigdone(int n __unused)
 static __dead void
 usage(int c)
 {
-	if (c)
+	if (c != '?')
 		warnx("Unknown option `%c'", (char)c);
 	fprintf(stderr, "Usage: %s [-vdfr] [-c <config>] [-R <rulename>] "
 	    "[-P <sockpathsfile>] [-C <controlprog>] [-D <dbfile>] "
@@ -474,7 +474,7 @@ main(int argc, char *argv[])
 
 	argc -= optind;
 	if (argc)
-		usage(0);
+		usage('?');
 
 	signal(SIGHUP, sighup);
 	signal(SIGINT, sigdone);
