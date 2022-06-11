@@ -121,6 +121,9 @@ main(int argc, char *argv[])
 		case 'w':
 			wide = 1;
 			break;
+		case '?':
+			usage(0);
+			break;
 		default:
 			usage(o);
 			break;
