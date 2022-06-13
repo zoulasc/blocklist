@@ -1005,7 +1005,6 @@ confset_match(const struct confset *cs, struct conf *c,
 #ifdef AF_ROUTE
 static int
 conf_route_perm(int fd) {
-/* Disable for now, the access check in the routing socket uses curlwp */
 #if defined(RTM_IFANNOUNCE) && defined(RT_ROUNDUP)
 	/*
 	 * Send a routing message that is not supported to check for access
