@@ -471,7 +471,6 @@ conf_amask_eq(const void *v1, const void *v2, size_t len, int mask)
 	uint32_t m;
 	int omask = mask;
 
-	len >>= 2;
 	switch (mask) {
 	case FSTAR:
 		if (memcmp(v1, v2, len) == 0)
@@ -485,7 +484,7 @@ conf_amask_eq(const void *v1, const void *v2, size_t len, int mask)
 		break;
 	}
 
-	for (size_t i = 0; i < len; i++) {
+	for (size_t i = 0; i < (len >> 2); i++) {
 		if (mask > 32) {
 			m = htonl((uint32_t)~0);
 			mask -= 32;
@@ -501,7 +500,6 @@ conf_amask_eq(const void *v1, const void *v2, size_t len, int mask)
 out:
 	if (debug > 1) {
 		char b1[256], b2[256];
-		len <<= 2;
 		blhexdump(b1, sizeof(b1), "a1", v1, len);
 		blhexdump(b2, sizeof(b2), "a2", v2, len);
 		(*lfun)(LOG_DEBUG, "%s: %s != %s [0x%x]", __func__,
