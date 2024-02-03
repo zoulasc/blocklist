@@ -1172,7 +1172,7 @@ conf_parse(const char *f)
 		return;
 	}
 
-	lineno = 1;
+	lineno = 0;
 
 	confset_init(&rc);
 	confset_init(&lc);
