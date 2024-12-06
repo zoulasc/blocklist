@@ -20,6 +20,7 @@ AM_CPPFLAGS += -D_PATH_BLCONF=\"$(sysconfdir)/blocklistd.conf\"
 AM_CPPFLAGS += -D_PATH_BLCONTROL=\"$(libexecdir)/blocklistd-helper\"
 AM_CPPFLAGS += -D_PATH_BLSOCK=\"$(runstatedir)/blocklistd.sock\"
 AM_CPPFLAGS += -D_PATH_BLSTATE=\"$(localstatedir)/db/blocklistd.db\"
+AM_CPPFLAGS += -std=c99 -D_POSIX_C_SOURCE=200809L -D__EXTENSIONS__
 AM_CFLAGS = @WARNINGS@
 
 libblocklist_la_SOURCES = bl.c blocklist.c
