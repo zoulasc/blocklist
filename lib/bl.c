@@ -59,19 +59,6 @@ __RCSID("$NetBSD: bl.c,v 1.3 2024/08/02 17:11:55 christos Exp $");
 
 #include "bl.h"
 
-#ifndef SYSLOG_DATA_INIT
-struct syslog_data {
-	int dummy;
-};
-#define SYSLOG_DATA_INIT  { 0 }
-
-static void
-vsyslog_r(int priority, struct syslog_data *sd, const char *fmt, va_list ap)
-{
-	vsyslog(priority, fmt, ap);
-}
-#endif
-
 typedef struct {
 	uint32_t bl_len;
 	uint32_t bl_version;

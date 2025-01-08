@@ -78,6 +78,14 @@ int clock_gettime(int, struct timespec *);
 #define CLOCK_REALTIME 0
 #endif
 
+#ifndef HAVE_VSYSLOG_R
+#define	SYSLOG_DATA_INIT	{ 0 }
+struct syslog_data {
+        int dummy;
+};
+void vsyslog_r(int, struct syslog_data *, const char *, va_list);
+#endif
+
 #if !defined(__FreeBSD__)
 #define _PATH_BLCONF "conf"
 #define _PATH_BLCONTROL "control"
