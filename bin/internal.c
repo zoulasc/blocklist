@@ -32,8 +32,10 @@
 #include "config.h"
 #endif
 
+#ifdef HAVE_SYS_CDEFS_H
 #include <sys/cdefs.h>
 __RCSID("$NetBSD: internal.c,v 1.1.1.1 2020/06/15 01:52:53 christos Exp $");
+#endif
 
 #include <stdio.h>
 #include <syslog.h>

@@ -32,7 +32,9 @@
 #include "config.h"
 #endif
 
+#ifdef HAVE_SYS_CDEFS_H
 #include <sys/cdefs.h>
+#endif
 #if defined(LIBC_SCCS) && !defined(lint)
 __RCSID("$NetBSD: sockaddr_snprintf.c,v 1.10 2016/04/05 12:28:57 christos Exp $");
 #endif /* LIBC_SCCS and not lint */

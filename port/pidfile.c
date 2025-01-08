@@ -32,7 +32,9 @@
 #include "config.h"
 #endif
 
+#ifdef HAVE_SYS_CDEFS_H
 #include <sys/cdefs.h>
+#endif
 #if defined(LIBC_SCCS) && !defined(lint)
 __RCSID("$NetBSD: pidfile.c,v 1.1 2015/01/22 16:19:53 christos Exp $");
 #endif

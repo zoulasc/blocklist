@@ -15,6 +15,22 @@
 #define __dead __attribute__((__noreturn__))
 #endif
 
+#ifndef __BEGIN_DECLS
+#define __BEGIN_DECLS
+#endif
+
+#ifndef __END_DECLS
+#define __END_DECLS
+#endif
+
+#ifndef MIN
+#define MIN(a,b) ((a) < (b) ? (a) : (b))
+#endif
+
+#ifndef MAX
+#define MAX(a,b) ((a) > (b) ? (a) : (b))
+#endif
+
 #ifndef __RCSID
 #define __RCSID(a)
 #endif
@@ -25,6 +41,10 @@
 
 #ifndef __arraycount
 #define __arraycount(a) (sizeof(a) / sizeof(a[0]))
+#endif
+
+#ifndef __STRING
+#define __STRING(x)	#x
 #endif
 
 #ifndef HAVE_STRLCPY

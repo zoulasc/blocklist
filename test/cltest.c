@@ -32,7 +32,9 @@
 #include "config.h"
 #endif
 
+#ifdef HAVE_SYS_CDEFS_H
 #include <sys/cdefs.h>
+#endif
 __RCSID("$NetBSD: cltest.c,v 1.5 2015/01/22 05:03:52 christos Exp $");
 
 #include <sys/types.h> 

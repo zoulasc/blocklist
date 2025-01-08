@@ -34,7 +34,10 @@
 #include <sys/socket.h>
 #include <syslog.h>
 
-__BEGIN_DECLS
+#if defined(__cplusplus)
+extern "C" {
+#endif
+
 struct syslog_data;
 struct blocklist *blocklist_open(void);
 struct blocklist *blocklist_open2(
@@ -45,7 +48,10 @@ int blocklist_r(struct blocklist *, int, int, const char *);
 int blocklist_sa(int, int, const struct sockaddr *, socklen_t, const char *);
 int blocklist_sa_r(struct blocklist *, int, int,
     const struct sockaddr *, socklen_t, const char *);
-__END_DECLS
+
+#if defined(__cplusplus)
+}
+#endif
 
 /* action values for user applications */
 #define BLOCKLIST_API_ENUM	1

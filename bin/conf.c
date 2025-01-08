@@ -32,7 +32,9 @@
 #include "config.h"
 #endif
 
+#ifdef HAVE_SYS_CDEFS_H
 #include <sys/cdefs.h>
+#endif
 __RCSID("$NetBSD: conf.c,v 1.9 2025/02/06 23:01:57 kre Exp $");
 
 #include <stdio.h>

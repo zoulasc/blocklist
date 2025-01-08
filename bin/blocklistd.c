@@ -31,8 +31,10 @@
 #ifdef HAVE_CONFIG_H
 #include "config.h"
 #endif
+#ifdef HAVE_SYS_CDEFS_H
 #include <sys/cdefs.h>
 __RCSID("$NetBSD: blocklistd.c,v 1.7 2025/02/05 20:14:30 christos Exp $");
+#endif
 
 #include <sys/types.h>
 #include <sys/socket.h>

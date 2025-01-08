@@ -33,7 +33,9 @@
 #include "config.h"
 #endif
 
+#ifdef HAVE_SYS_CDEFS_H
 #include <sys/cdefs.h>
+#endif
 __RCSID("$NetBSD: strtoi.c,v 1.2 2015/01/22 02:35:44 christos Exp $");
 
 #if defined(_KERNEL)

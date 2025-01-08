@@ -32,8 +32,10 @@
 #include "config.h"
 #endif
 
+#ifdef HAVE_SYS_CDEFS_H
 #include <sys/cdefs.h>
 __RCSID("$NetBSD: run.c,v 1.2 2025/02/05 20:09:33 christos Exp $");
+#endif
 
 #include <stdio.h>
 #ifdef HAVE_LIBUTIL_H

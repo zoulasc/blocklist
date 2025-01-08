@@ -32,7 +32,9 @@
 #include "config.h"
 #endif
 
+#ifdef HAVE_SYS_CDEFS_H
 #include <sys/cdefs.h>
+#endif
 __RCSID("$NetBSD: blocklist.c,v 1.3 2024/08/02 17:11:56 christos Exp $");
 
 #include <stdio.h>
