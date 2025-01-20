@@ -3,7 +3,15 @@ ACLOCAL_AMFLAGS = -I m4
 lib_LTLIBRARIES = libblocklist.la
 include_HEADERS = ../include/blocklist.h
 
-bin_PROGRAMS = blocklistd blocklistctl srvtest cltest
+exampledir = $(datarootdir)/examples/blocklistd
+example_DATA = ../etc/blocklistd.conf ../etc/npf.conf
+
+sbin_PROGRAMS = blocklistd blocklistctl
+noinst_PROGRAMS = srvtest cltest
+libexec_SCRIPTS = ../libexec/blocklistd-helper
+
+man5_MANS = ../bin/blocklistd.conf.5
+man8_MANS = ../bin/blocklistd.8 ../bin/blocklistctl.8
 
 VPATH = ../bin:../lib:../test:../include
 
