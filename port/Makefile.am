@@ -16,6 +16,10 @@ man8_MANS = ../bin/blocklistd.8 ../bin/blocklistctl.8
 VPATH = ../bin:../lib:../test:../include
 
 AM_CPPFLAGS = -I../include  -DDOT="."
+AM_CPPFLAGS += -D_PATH_BLCONF=\"$(sysconfdir)/blocklistd.conf\"
+AM_CPPFLAGS += -D_PATH_BLCONTROL=\"$(libexecdir)/blocklistd-helper\"
+AM_CPPFLAGS += -D_PATH_BLSOCK=\"$(runstatedir)/blocklistd.sock\"
+AM_CPPFLAGS += -D_PATH_BLSTATE=\"$(localstatedir)/db/blocklistd.db\"
 AM_CFLAGS = @WARNINGS@
 
 libblocklist_la_SOURCES = bl.c blocklist.c

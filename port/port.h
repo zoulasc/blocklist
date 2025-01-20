@@ -105,10 +105,3 @@ struct syslog_data {
 };
 void vsyslog_r(int, struct syslog_data *, const char *, va_list);
 #endif
-
-#if !defined(__FreeBSD__)
-#define _PATH_BLCONF "conf"
-#define _PATH_BLCONTROL "control"
-#define _PATH_BLSOCK "blocklistd.sock"
-#define _PATH_BLSTATE "blocklistd.db"
-#endif
