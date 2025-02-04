@@ -227,7 +227,7 @@ process(bl_t bl)
 			dbi.count = c.c_nfail - 1;
 		/*FALLTHROUGH*/
 	case BL_BADUSER:
-		if (!blbaduser)
+		if (!blbaduser && bi->bi_type == BL_BADUSER)
 			break;
 		/*FALLTHROUGH*/
 	case BL_ADD:
