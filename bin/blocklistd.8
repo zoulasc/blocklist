@@ -35,7 +35,7 @@
 .Nd block and release ports on demand to avoid DoS abuse
 .Sh SYNOPSIS
 .Nm
-.Op Fl dfrv
+.Op Fl dfrUv
 .Op Fl C Ar controlprog
 .Op Fl c Ar configfile
 .Op Fl D Ar dbfile
@@ -225,6 +225,8 @@ listens to.
 The interval in seconds
 .Nm
 polls the state file to update the rules.
+.It Fl U
+Block also those trying to use a non-existent username.
 .It Fl v
 Cause
 .Nm

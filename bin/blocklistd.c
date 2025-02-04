@@ -76,6 +76,7 @@ static DB *state;
 static const char *dbfile = _PATH_BLSTATE;
 static sig_atomic_t readconf;
 static sig_atomic_t done;
+static int blbaduser = 0;
 static int vflag;
 
 static void
@@ -107,7 +108,7 @@ usage(int c)
 {
 	if (c != '?')
 		warnx("Unknown option `%c'", (char)c);
-	fprintf(stderr, "Usage: %s [-vdfr] [-c <config>] [-R <rulename>] "
+	fprintf(stderr, "Usage: %s [-vdfrU] [-c <config>] [-R <rulename>] "
 	    "[-P <sockpathsfile>] [-C <controlprog>] [-D <dbfile>] "
 	    "[-s <sockpath>] [-t <timeout>]\n", getprogname());
 	exit(EXIT_FAILURE);
@@ -225,6 +226,10 @@ process(bl_t bl)
 		if (c.c_nfail != -1)
 			dbi.count = c.c_nfail - 1;
 		/*FALLTHROUGH*/
+	case BL_BADUSER:
+		if (!blbaduser)
+			break;
+		/*FALLTHROUGH*/
 	case BL_ADD:
 		dbi.count++;
 		dbi.last = ts.tv_sec;
@@ -253,9 +258,6 @@ process(bl_t bl)
 			goto out;
 		dbi.count = 0;
 		dbi.last = 0;
-		break;
-	case BL_BADUSER:
-		/* ignore for now */
 		break;
 	default:
 		(*lfun)(LOG_ERR, "unknown message %d", bi->bi_type);
@@ -432,7 +434,7 @@ main(int argc, char *argv[])
 	restore = 0;
 	tout = 0;
 	flags = O_RDWR|O_EXCL|O_CLOEXEC;
-	while ((c = getopt(argc, argv, "C:c:D:dfP:rR:s:t:v")) != -1) {
+	while ((c = getopt(argc, argv, "C:c:D:dfP:rR:s:t:Uv")) != -1) {
 		switch (c) {
 		case 'C':
 			controlprog = optarg;
@@ -473,6 +475,9 @@ main(int argc, char *argv[])
 			break;
 		case 't':
 			tout = atoi(optarg) * 1000;
+			break;
+		case 'U':
+			blbaduser++;
 			break;
 		case 'v':
 			vflag++;
