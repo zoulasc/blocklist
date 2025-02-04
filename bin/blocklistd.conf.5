@@ -143,8 +143,8 @@ The
 field, is the name of the packet filter rule to be used.
 If the
 .Va name
-starts with a
-.Dq - ,
+starts with a hyphen
+.Pq Dq - ,
 then the default rulename is prepended to the given name.
 If the
 .Dv name
@@ -160,13 +160,13 @@ field contains the number of failed attempts before access is blocked,
 defaulting to
 .Dq *
 meaning never, and the last field
-.Va disable
+.Va duration
 specifies the amount of time since the last access that the blocking
 rule should be active, defaulting to
 .Dq *
 meaning forever.
 The default unit for
-.Va disable
+.Va duration
 is seconds, but one can specify suffixes for different units, such as
 .Dq m
 for minutes
@@ -178,14 +178,14 @@ for days.
 Matching is done first by checking the
 .Va [local]
 rules individually, in the order of the most specific to the least specific.
-If a match is found, then the
+If a match is found, then the matching
 .Va [remote]
 rules are applied.
 The
 .Va name ,
 .Va nfail ,
 and
-.Va disable
+.Va duration
 fields can be altered by the
 .Va [remote]
 rule that matched.
@@ -193,8 +193,14 @@ rule that matched.
 The
 .Va [remote]
 rules can be used for allowing specific addresses, changing the mask
-size, the rule that the packet filter uses, the number of failed attempts,
-or the block duration.
+size (via
+.Va name ) ,
+the rule that the packet filter uses (also via
+.Va name ) ,
+the number of failed attempts (via
+.Va nfail ) ,
+or the duration to block (via
+.Va duration ) .
 .Sh FILES
 .Bl -tag -width /etc/blocklistd.conf -compact
 .It Pa /etc/blocklistd.conf
