@@ -188,10 +188,11 @@ process(bl_t bl)
 	if (getremoteaddress(bi, &rss, &rsl) == -1)
 		goto out;
 
-	if (debug) {
+	if (debug || bi->bi_msg[0]) {
 		sockaddr_snprintf(rbuf, sizeof(rbuf), "%a:%p", (void *)&rss);
-		(*lfun)(LOG_DEBUG, "processing type=%d fd=%d remote=%s msg=%s"
-		    " uid=%lu gid=%lu", bi->bi_type, bi->bi_fd, rbuf,
+		(*lfun)(bi->bi_msg[0] ? LOG_INFO : LOG_DEBUG,
+		    "processing type=%d fd=%d remote=%s msg=%s uid=%lu gid=%lu",
+		    bi->bi_type, bi->bi_fd, rbuf,
 		    bi->bi_msg, (unsigned long)bi->bi_uid,
 		    (unsigned long)bi->bi_gid);
 	}
