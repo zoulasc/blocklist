@@ -34,6 +34,7 @@
 #include <sys/socket.h>
 
 struct conf {
+	size_t			c_lineno;
 	struct sockaddr_storage	c_ss;
 	int			c_lmask;
 	int			c_port;

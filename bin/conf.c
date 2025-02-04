@@ -409,6 +409,8 @@ conf_parseline(const char *f, size_t l, char *p, struct conf *c, bool local)
 {
 	int e;
 
+	c->c_lineno = l;
+
 	while (*p && isspace((unsigned char)*p))
 		p++;
 
