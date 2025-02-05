@@ -131,7 +131,8 @@ run_change(const char *how, const struct conf *c, char *id, size_t len)
 		prname = "udp";
 		break;
 	default:
-		(*lfun)(LOG_ERR, "%s: bad protocol %d", __func__, c->c_proto);
+		(*lfun)(LOG_ERR, "%s: bad protocol %d (line %zu)", __func__,
+		     c->c_proto, c->c_lineno);
 		return -1;
 	}
 
