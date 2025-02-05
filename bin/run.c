@@ -1,4 +1,4 @@
-/*	$NetBSD: run.c,v 1.14 2016/04/04 15:52:56 christos Exp $	*/
+/*	$NetBSD: run.c,v 1.2 2025/02/05 20:09:33 christos Exp $	*/
 
 /*-
  * Copyright (c) 2015 The NetBSD Foundation, Inc.
@@ -33,7 +33,7 @@
 #endif
 
 #include <sys/cdefs.h>
-__RCSID("$NetBSD: run.c,v 1.14 2016/04/04 15:52:56 christos Exp $");
+__RCSID("$NetBSD: run.c,v 1.2 2025/02/05 20:09:33 christos Exp $");
 
 #include <stdio.h>
 #ifdef HAVE_LIBUTIL_H
