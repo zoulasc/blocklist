@@ -978,6 +978,7 @@ static void
 confset_merge(struct confset *dc, struct confset *sc)
 {
 	size_t i, j;
+	char buf[BUFSIZ];
 
 	/* Check each rule of the src confset (sc) */
 	for (i = 0; i < sc->cs_n; i++) {
@@ -988,40 +989,37 @@ confset_merge(struct confset *dc, struct confset *sc)
 			}
 		}
 
-		/* We had a match above. */
-		if (j != dc->cs_n) {
-			char buf[BUFSIZ];
-
-			/*
-			 * Check whether the rule from the src confset is more
-			 * restrictive than the existing one. Adjust the
-			 * existing rule if necessary.
-			 */
-			if (sc->cs_c[i].c_nfail == dc->cs_c[j].c_nfail &&
-			    sc->cs_c[i].c_duration && dc->cs_c[j].c_duration) {
-				(*lfun)(LOG_DEBUG, "skipping existing rule: %s",
-				    conf_print(buf, sizeof (buf), "", "\t",
-					&sc->cs_c[i]));
-				continue;
-			}
-
-			if (sc->cs_c[i].c_nfail < dc->cs_c[j].c_nfail)
-				dc->cs_c[j].c_nfail = sc->cs_c[i].c_nfail;
-
-			if (sc->cs_c[i].c_duration > dc->cs_c[j].c_duration)
-				dc->cs_c[j].c_duration = sc->cs_c[i].c_duration;
-
-			(*lfun)(LOG_DEBUG, "adjusted existing rule: %s",
-			    conf_print(buf, sizeof (buf), "", "\t",
-				&dc->cs_c[j]));
-		} else {
+		if (j == dc->cs_n) {
 			/* This is a new rule to add to the dest confset. */
-			if (confset_full(dc) && (confset_grow(dc) == -1))
+			if (confset_full(dc) && confset_grow(dc) == -1)
 				return;
 
 			*confset_get(dc) = sc->cs_c[i];
 			confset_add(dc);
+			continue;
 		}
+
+		/* We had a match above. */
+		/*
+		 * Check whether the rule from the src confset is more
+		 * restrictive than the existing one. Adjust the
+		 * existing rule if necessary.
+		 */
+		if (sc->cs_c[i].c_nfail == dc->cs_c[j].c_nfail &&
+		    sc->cs_c[i].c_duration && dc->cs_c[j].c_duration) {
+			(*lfun)(LOG_DEBUG, "skipping existing rule: %s",
+			conf_print(buf, sizeof (buf), "", "\t", &sc->cs_c[i]));
+			continue;
+		}
+
+		if (sc->cs_c[i].c_nfail < dc->cs_c[j].c_nfail)
+			dc->cs_c[j].c_nfail = sc->cs_c[i].c_nfail;
+
+		if (sc->cs_c[i].c_duration > dc->cs_c[j].c_duration)
+			dc->cs_c[j].c_duration = sc->cs_c[i].c_duration;
+
+		(*lfun)(LOG_DEBUG, "adjusted existing rule: %s",
+		    conf_print(buf, sizeof (buf), "", "\t", &dc->cs_c[j]));
 	}
 
 	confset_free(sc);
@@ -1273,41 +1271,37 @@ conf_parsefile(FILE *fp, const char *config_file)
 static void
 conf_parsedir(DIR *dir, const char *config_path)
 {
-	long path_max = pathconf(config_path, _PC_PATH_MAX);
-	char *path = malloc(path_max);
+	long path_max;
 	struct dirent *dent;
+	char *path;
 	FILE *fp;
 
-	if (path == NULL) {
+	if ((path_max = pathconf(config_path, _PC_PATH_MAX)) == -1)
+		path_max = 2048;
+
+	if ((path = malloc((size_t)path_max)) == NULL) {
 		(*lfun)(LOG_ERR, "%s: Failed to allocate memory for path (%m)",
 		    __func__);
 		return;
 	}
 
-	for (errno = 0, dent = readdir(dir);
-	     dent != NULL;
-	     errno = 0, dent = readdir(dir)) {
+	while ((dent = readdir(dir)) != NULL) {
 		if (strcmp(dent->d_name, ".") == 0 ||
 		    strcmp(dent->d_name, "..") == 0)
 			continue;
 
 		(void) snprintf(path, path_max, "%s/%s", config_path,
 		    dent->d_name);
-		if ((fp = fopen(path, "r")) != NULL) {
-			conf_parsefile(fp, path);
-			fclose(fp);
-		} else {
+		if ((fp = fopen(path, "r")) == NULL) {
 			(*lfun)(LOG_ERR, "%s: Cannot open `%s' (%m)", __func__,
 			    path);
+			continue;
 		}
+		conf_parsefile(fp, path);
+		fclose(fp);
 	}
 
 	free(path);
-
-	if (errno != 0) {
-		(*lfun)(LOG_ERR, "%s: Failed to read directory entry from `%s' "
-		    "(%m)", __func__, config_path);
-	}
 }
 
 void
@@ -1345,6 +1339,7 @@ conf_parse(const char *config_path)
 		conf_parsedir(dir, path);
 		closedir(dir);
 	}
+	free(path);
 
 out:
 	if (dir == NULL && fp == NULL) {
