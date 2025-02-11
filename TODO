@@ -1,4 +1,4 @@
-# $NetBSD: TODO,v 1.2 2021/03/07 00:46:39 christos Exp $
+# $NetBSD: TODO,v 1.3 2025/02/05 20:22:26 christos Exp $
 
 - don't poll periodically, find the next timeout
 - use the socket also for commands? Or separate socket?
