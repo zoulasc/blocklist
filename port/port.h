@@ -1,6 +1,7 @@
 #ifndef _GNU_SOURCE
 #define _GNU_SOURCE
 #endif
+#include <sys/param.h>
 #include <stdio.h>
 #include <inttypes.h>
 #include <time.h>
