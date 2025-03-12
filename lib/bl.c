@@ -543,12 +543,7 @@ bl_recv(bl_t b)
 	bi->bi_uid = -1;
 	bi->bi_gid = -1;
 #endif
-	if (rem == 0)
-		bi->bi_msg[0] = '\0';
-	else {
-		rem = MIN(sizeof(bi->bi_msg) - 1, rem);
-		memcpy(bi->bi_msg, ub.bl.bl_data, rem);
-		bi->bi_msg[rem] = '\0';
-	}
+	rem = MIN(sizeof(bi->bi_msg) - 1, rem);
+	strlcpy(bi->bi_msg, ub.bl.bl_data, rem + 1);
 	return bi;
 }
