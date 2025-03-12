@@ -191,12 +191,12 @@ process(bl_t bl)
 	}
 
 	if (getremoteaddress(bi, &rss, &rsl) == -1)
-		goto out;
+		return;
 
 	if (debug || bi->bi_msg[0]) {
 		sockaddr_snprintf(rbuf, sizeof(rbuf), "%a:%p", (void *)&rss);
 		(*lfun)(bi->bi_msg[0] ? LOG_INFO : LOG_DEBUG,
-		    "processing type=%d fd=%d remote=%s msg=%s uid=%lu gid=%lu",
+		    "processing type=%d fd=%d remote=%s msg=\"%s\" uid=%lu gid=%lu",
 		    bi->bi_type, bi->bi_fd, rbuf,
 		    bi->bi_msg, (unsigned long)bi->bi_uid,
 		    (unsigned long)bi->bi_gid);
@@ -204,12 +204,12 @@ process(bl_t bl)
 
 	if (conf_find(bi->bi_fd, bi->bi_uid, &rss, &c) == NULL) {
 		(*lfun)(LOG_DEBUG, "no rule matched");
-		goto out;
+		return;
 	}
 
 
 	if (state_get(state, &c, &dbi) == -1)
-		goto out;
+		return;
 
 	if (debug) {
 		char b1[128], b2[128];
@@ -269,8 +269,6 @@ process(bl_t bl)
 	state_put(state, &c, &dbi);
 
 out:
-	close(bi->bi_fd);
-
 	if (debug) {
 		char b1[128], b2[128];
 		(*lfun)(LOG_DEBUG, "%s: final db state for %s: count=%d/%d "
@@ -565,7 +563,7 @@ main(int argc, char *argv[])
 			conf_parse(configfile);
 		}
 		ret = poll(pfd, (nfds_t)nfd, tout);
-		if (debug)
+		if (debug && ret != 0)
 			(*lfun)(LOG_DEBUG, "received %d from poll()", ret);
 		switch (ret) {
 		case -1:
