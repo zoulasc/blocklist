@@ -538,10 +538,11 @@ bl_recv(bl_t b)
 	bi->bi_uid = -1;
 	bi->bi_gid = -1;
 #endif
-	rem = MIN(sizeof(bi->bi_msg), rem);
 	if (rem == 0)
 		bi->bi_msg[0] = '\0';
-	else
+	else {
+		rem = MIN(sizeof(bi->bi_msg), rem + 1);
 		strlcpy(bi->bi_msg, ub.bl.bl_data, rem);
+	}
 	return bi;
 }
