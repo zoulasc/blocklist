@@ -38,11 +38,11 @@
 #include "blocklist.h"
 
 typedef enum {
-	BL_INVALID,
-	BL_ADD,
 	BL_DELETE,
+	BL_BADUSER,
+	BL_ADD,
 	BL_ABUSE,
-	BL_BADUSER
+	BL_INVALID
 } bl_type_t;
 
 typedef struct {
