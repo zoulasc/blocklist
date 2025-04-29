@@ -54,12 +54,12 @@ int blocklist_sa_r(struct blocklist *, int, int,
 #endif
 
 /* action values for user applications */
-#define BLOCKLIST_API_ENUM	1
+#define BLOCKLIST_API_ENUM	2
 enum {
         BLOCKLIST_AUTH_OK = 0,
+        BLOCKLIST_BAD_USER,
         BLOCKLIST_AUTH_FAIL,
-        BLOCKLIST_ABUSIVE_BEHAVIOR,
-        BLOCKLIST_BAD_USER
+        BLOCKLIST_ABUSIVE_BEHAVIOR
 };
 
 #endif /* _BLOCKLIST_H */
