@@ -149,9 +149,8 @@ main(int argc, char *argv[])
 					continue;
 			}
 		}
-		printf("%s\t", c.c_name);
 		sockaddr_snprintf(buf, sizeof(buf), "%a", (void *)&c.c_ss);
-		printf("%*.*s/%s:%s\t", wide, wide, buf,
+		printf("%s\t%*.*s/%s:%s\t", c.c_name, wide, wide, buf,
 		    star(mbuf, sizeof(mbuf), c.c_lmask),
 		    star(pbuf, sizeof(pbuf), c.c_port));
 		if (c.c_duration == -1) {
