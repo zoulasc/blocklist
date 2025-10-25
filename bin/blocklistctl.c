@@ -1,4 +1,4 @@
-/*	$NetBSD: blocklistctl.c,v 1.4 2025/02/11 17:48:30 christos Exp $	*/
+/*	$NetBSD: blocklistctl.c,v 1.5 2025/10/25 16:56:10 christos Exp $	*/
 
 /*-
  * Copyright (c) 2015 The NetBSD Foundation, Inc.
@@ -35,7 +35,7 @@
 #ifdef HAVE_SYS_CDEFS_H
 #include <sys/cdefs.h>
 #endif
-__RCSID("$NetBSD: blocklistctl.c,v 1.4 2025/02/11 17:48:30 christos Exp $");
+__RCSID("$NetBSD: blocklistctl.c,v 1.5 2025/10/25 16:56:10 christos Exp $");
 
 #include <stdio.h>
 #include <time.h>
