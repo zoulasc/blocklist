@@ -225,7 +225,7 @@ process(bl_t bl)
 		 * If the application has signaled abusive behavior, set the
 		 * number of fails to be two less than the configured limit.
 		 * Fall through to the normal BL_ADD and BL_BADUSER processing,
-		 * which will increment the failure count to the threshhold, and
+		 * which will increment the failure count to the threshold, and
 		 * block the abusive address.
 		 */
 		if (c.c_nfail != -1)
