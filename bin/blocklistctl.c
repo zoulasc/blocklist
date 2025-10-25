@@ -135,7 +135,7 @@ main(int argc, char *argv[])
 	clock_gettime(CLOCK_REALTIME, &ts);
 	wide = wide ? 8 * 4 + 7 : 4 * 3 + 3;
 	if (!noheader)
-		printf("%*.*s/ma:port\tid\tnfail\t%s\n", wide, wide,
+		printf("rulename\t%*.*s/ma:port\tid\tnfail\t%s\n", wide, wide,
 		    "address", remain ? "remaining time" : "last access");
 	for (i = 1; state_iterate(db, &c, &dbi, i) != 0; i = 0) {
 		char buf[BUFSIZ];
@@ -149,6 +149,7 @@ main(int argc, char *argv[])
 					continue;
 			}
 		}
+		printf("%s\t", c.c_name);
 		sockaddr_snprintf(buf, sizeof(buf), "%a", (void *)&c.c_ss);
 		printf("%*.*s/%s:%s\t", wide, wide, buf,
 		    star(mbuf, sizeof(mbuf), c.c_lmask),
