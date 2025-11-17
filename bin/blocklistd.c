@@ -541,14 +541,15 @@ main(int argc, char *argv[])
 	state = state_open(dbfile, flags, 0600);
 	if (state == NULL)
 		state = state_open(dbfile,  flags | O_CREAT, 0600);
+	else {
+		if (restore) {
+			if (!flush)
+				rules_flush();
+			rules_restore();
+		}
+	}
 	if (state == NULL)
 		return EXIT_FAILURE;
-
-	if (restore) {
-		if (!flush)
-			rules_flush();
-		rules_restore();
-	}
 
 	if (!debug) {
 		if (daemon(0, 0) == -1)
